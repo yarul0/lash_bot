@@ -74,12 +74,13 @@ async def my_bookings(message: Message):
         txt = (f"👁️ Нарощування вій\n"
                f"🕐 {fmt_dt(b['start_ts'])}\n"
                f"Статус: {status_map.get(b['status'], b['status'])}")
-        kb = InlineKeyboardMarkup(inline_keyboard=[[
-            InlineKeyboardButton(text="✅ Підтвердити",
-                                 callback_data=f"confirm_{b['id']}"),
-            InlineKeyboardButton(text="❌ Скасувати",
-                                 callback_data=f"client_cancel_{b['id']}"),
-        ]])
+        buttons = []
+        if b["status"] == "pending":
+            buttons.append(InlineKeyboardButton(text="✅ Підтвердити",
+                                                callback_data=f"confirm_{b['id']}"))
+        buttons.append(InlineKeyboardButton(text="❌ Скасувати",
+                                            callback_data=f"client_cancel_{b['id']}"))
+        kb = InlineKeyboardMarkup(inline_keyboard=[buttons])
         await message.answer(txt, reply_markup=kb)
 
 
