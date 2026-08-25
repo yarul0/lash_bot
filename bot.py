@@ -245,6 +245,7 @@ async def main():
 async def webhook_main():
     """Режим для Render: приймає оновлення через webhook на $PORT."""
     from fastapi import FastAPI, Request
+    from fastapi.responses import HTMLResponse
     import uvicorn
 
     webhook_path = "/webhook"
@@ -252,7 +253,16 @@ async def webhook_main():
 
     @web_app.get("/")
     async def health():
-        return {"ok": True}
+        html = (
+            "<!doctype html><html lang='uk'><head><meta charset='utf-8'>"
+            "<title>Lash-bot</title></head><body style='font-family:system-ui;"
+            "text-align:center;padding-top:60px'>"
+            "<h1>💅 Lash-bot</h1>"
+            "<p>Бот працює.</p>"
+            f"<p>Майстер: {config.MASTER_USERNAME or '—'}</p>"
+            "</body></html>"
+        )
+        return HTMLResponse(html)
 
     @web_app.post(webhook_path)
     async def webhook(request: Request):
