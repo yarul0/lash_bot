@@ -10,6 +10,7 @@ import aiosqlite
 import libsql
 
 import config
+import db
 
 TABLES = ["services", "slots", "schedule_days", "bookings"]
 
@@ -23,6 +24,17 @@ async def main():
     src.row_factory = aiosqlite.Row
     dst = libsql.connect(database=config.TURSO_URL,
                          auth_token=config.TURSO_AUTH_TOKEN or None)
+
+    for stmt in db.SCHEMA:
+        dst.execute(stmt)
+    dst.commit()
+    print("Схему створено")
+    for dow in range(6):
+        dst.execute(
+            "INSERT OR IGNORE INTO schedule_days (dow, active, times) VALUES (?, 1, ?)",
+            (dow, db.DEFAULT_TIMES),
+        )
+    dst.commit()
 
     for table in TABLES:
         cur = await src.execute(f"SELECT * FROM {table}")
