@@ -32,7 +32,9 @@ class BookingStates(StatesGroup):
 
 
 def fmt_dt(ts):
-    return datetime.strptime(ts, TS_FMT).strftime("%d.%m о %H:%M")
+    d = datetime.strptime(ts, TS_FMT)
+    weekday_names = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"]
+    return f"{d.strftime('%d.%m')} ({weekday_names[d.weekday()]}) о {d.strftime('%H:%M')}"
 
 
 def main_menu():
@@ -73,7 +75,8 @@ async def my_bookings(message: Message):
     for b in bookings:
         txt = (f"👁️ Нарощування вій\n"
                f"🕐 {fmt_dt(b['start_ts'])}\n"
-               f"Статус: {status_map.get(b['status'], b['status'])}")
+               f"Статус: {status_map.get(b['status'], b['status'])}\n"
+               f"📞 {config.MASTER_USERNAME or '@kh_sveta_lash'}")
         buttons = []
         if b["status"] == "pending":
             buttons.append(InlineKeyboardButton(text="✅ Підтвердити",
