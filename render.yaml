@@ -22,3 +22,7 @@ services:
         sync: false
       - key: MASTER_USERNAME
         sync: false
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false

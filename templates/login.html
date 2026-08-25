@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вхід — Адмінка салону вій</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, sans-serif; margin: 0;
+         background: #faf7f5; color: #333; display: flex; align-items: center;
+         justify-content: center; min-height: 100vh; }
+  .login { background: #fff; border-radius: 10px; padding: 32px; width: 300px;
+           box-shadow: 0 1px 8px rgba(0,0,0,.1); }
+  h1 { margin: 0 0 20px; font-size: 20px; color: #5b3a8c; }
+  input { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ddd;
+          border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+  button { width: 100%; background: #5b3a8c; color: #fff; border: none; padding: 10px;
+           border-radius: 6px; cursor: pointer; font-size: 14px; }
+  .flash { background: #fdecea; border: 1px solid #f5c6c0; color: #b53b2e; padding: 10px;
+           border-radius: 6px; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<div class="login">
+  <h1>💅 Вхід в адмінку</h1>
+  {% if flash %}
+  <div class="flash">{{ flash }}</div>
+  {% endif %}
+  <form method="post" action="/login">
+    <input type="text" name="username" placeholder="Логін" required autofocus>
+    <input type="password" name="password" placeholder="Пароль" required>
+    <button type="submit">Увійти</button>
+  </form>
+</div>
+</body>
+</html>

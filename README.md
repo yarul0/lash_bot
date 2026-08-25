@@ -57,6 +57,7 @@ python migrate_to_turso.py
 - **Start Command:** `python bot.py`
 - **Environment Variables** (у `Environment` сервісу):
   - `BOT_TOKEN`, `ADMIN_ID`, `REMINDER_MINUTES`, `MASTER_USERNAME`
+  - `ADMIN_USERNAME`, `ADMIN_PASSWORD` — логін/пароль від веб-адмінки
   - `TURSO_URL`, `TURSO_AUTH_TOKEN`
   - `WEBHOOK_URL` — URL сервісу, напр. `https://lash-bot.onrender.com`
   - `WEBHOOK_SECRET` — будь-який випадковий рядок
@@ -64,14 +65,17 @@ python migrate_to_turso.py
 
 > Бот сам реєструє webhook при старті. Локально (без `WEBHOOK_URL`) він працює в режимі polling.
 >
+> Адмінка живе в **тому ж сервісі** і доступна за тим самим доменом:
+> `https://lash-bot.onrender.com/` → сторінка входу (логін/пароль з `ADMIN_USERNAME`/`ADMIN_PASSWORD`).
+>
 > Безкоштовний план Render «засинає» після 15 хв без трафіку.
 > Щоб бот прокидався миттєво, налаштуй безкоштовний пінг
-> на [cron-job.org](https://cron-job.org) — GET запит на `https://lash-bot.onrender.com/` кожні 10 хвилин.
+> на [cron-job.org](https://cron-job.org) — GET запит на `https://lash-bot.onrender.com/health` кожні 10 хвилин.
 > Перші повідомлення клієнтів після сну можуть затриматися на ~30–60 с (Telegram сам повторює webhook).
 
 ### 5. Налаштування адмінки після деплою
 Локальна адмінка (`uvicorn app:app`) має працювати з **тими самими** `TURSO_URL`/`TURSO_AUTH_TOKEN`
-у `.env`, щоб бачити записи з хмарної бази.
+у `.env`, щоб бачити записи з хмарної бази. Тепер вона теж захищена логіном/паролем.
 
 ## Як отримати токен бота
 1. Напиши [@BotFather](https://t.me/BotFather) → `/newbot` → отримай токен.
