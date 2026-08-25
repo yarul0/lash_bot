@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 
 .env
+render.env
 *.db
 *.sqlite
 *.log
