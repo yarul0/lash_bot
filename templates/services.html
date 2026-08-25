@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>💇 Послуги</h2>
+
+<h3>Додати послугу</h3>
+<form method="post" action="/services/add" class="row">
+  <input type="text" name="name" placeholder="Назва" required>
+  <input type="number" name="duration_min" placeholder="Тривалість (хв)" required>
+  <input type="number" name="price" placeholder="Ціна (грн)" required>
+  <button type="submit">Додати</button>
+</form>
+
+<h3>Список</h3>
+<table>
+  <tr><th>Назва</th><th>Тривалість</th><th>Ціна</th><th>Активна</th><th></th></tr>
+  {% for s in services %}
+  <tr>
+    <td>{{ s['name'] }}</td>
+    <td>{{ s['duration_min'] }} хв</td>
+    <td>{{ s['price'] }} грн</td>
+    <td>{{ '✅' if s['active'] else '❌' }}</td>
+    <td>
+      <form method="post" action="/services/toggle" style="display:inline">
+        <input type="hidden" name="service_id" value="{{ s['id'] }}">
+        <button type="submit" class="btn {{ 'gray' if s['active'] else '' }}">
+          {{ 'Вимкнути' if s['active'] else 'Увімкнути' }}
+        </button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

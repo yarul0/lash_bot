@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>🗓 Розклад</h2>
+
+<div class="card">
+  <h3>⚙️ Розклад на тиждень (дні та часи)</h3>
+  <form method="post" action="/schedule/days">
+    <table>
+      <tr><th>День</th><th>Активний</th><th>Часи (через кому, ГГ:ХХ)</th></tr>
+      {% for d in days %}
+      <tr>
+        <td>{{ DOW_NAMES[d['dow']] }}</td>
+        <td>
+          <input type="hidden" name="dow" value="{{ d['dow'] }}">
+          <input type="checkbox" name="active_{{ d['dow'] }}" {{ 'checked' if d['active'] }}>
+        </td>
+        <td><input type="text" name="times_{{ d['dow'] }}" value="{{ d['times'] }}" style="width:220px"></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <button type="submit">💾 Зберегти розклад</button>
+  </form>
+</div>
+
+<div class="card">
+  <h3>🚀 Згенерувати слоти на наступний тиждень</h3>
+  <form method="post" action="/schedule/generate" class="row">
+    <select name="service_id" required>
+      {% for s in services %}
+      <option value="{{ s['id'] }}">{{ s['name'] }} ({{ s['duration_min'] }} хв)</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Створити слоти на тиждень</button>
+  </form>
+  <p style="color:#999;font-size:13px">Створює слоти для наступних 7 днів згідно з розкладом вище (Пн-Сб).</p>
+</div>
+
+<h3>Вільні слоти</h3>
+{% for s in services %}
+<div class="card">
+  <strong>{{ s['name'] }}</strong>
+  {% set slots = free_slots.get(s['id'], []) %}
+  {% if slots %}
+  <table>
+    <tr><th>Час</th><th>Статус</th></tr>
+    {% for slot in slots %}
+    <tr><td>{{ slot['start_ts'] }}</td><td>{{ slot['status'] }}</td></tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p style="color:#999">Немає вільних слотів.</p>
+  {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

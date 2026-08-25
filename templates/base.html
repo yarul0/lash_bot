@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Адмінка салону вій</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, sans-serif; margin: 0; background: #faf7f5; color: #333; }
+  header { background: #5b3a8c; color: #fff; padding: 16px 24px; }
+  header h1 { margin: 0; font-size: 20px; }
+  .wrap { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
+  nav a { color: #5b3a8c; margin-right: 16px; font-weight: 600; text-decoration: none; }
+  .card { background: #fff; border-radius: 10px; padding: 16px; margin-bottom: 16px;
+          box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; }
+  button, .btn { background: #5b3a8c; color: #fff; border: none; padding: 8px 14px;
+                 border-radius: 6px; cursor: pointer; font-size: 14px; }
+  .btn.danger { background: #c0392b; }
+  .btn.gray { background: #999; }
+  input, select { padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .status { padding: 2px 8px; border-radius: 10px; font-size: 12px; color: #fff; }
+  .pending { background: #f39c12; } .confirmed { background: #27ae60; }
+  .cancelled { background: #95a5a6; }
+  .flash { background: #eafbea; border: 1px solid #a7e0a7; color: #1d7a1d; padding: 10px;
+           border-radius: 6px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<header><h1>💅 Салон вій — адмінка</h1></header>
+<div class="wrap">
+  <nav>
+    <a href="/">Записи</a>
+    <a href="/schedule">Розклад</a>
+    <a href="/services">Послуги</a>
+  </nav>
+
+  {% if flash %}
+  <div class="flash">{{ flash }}</div>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>📋 Записи клієнтів</h2>
+<table>
+  <tr><th>Дата</th><th>Послуга</th><th>Клієнт</th><th>Телефон</th><th>Ціна</th><th>Статус</th></tr>
+  {% for b in bookings %}
+  <tr>
+    <td>{{ b['start_ts'] }}</td>
+    <td>{{ b['service_name'] }}</td>
+    <td>{{ b['client_name'] }}</td>
+    <td>{{ b['client_phone'] or '-' }}</td>
+    <td>{{ b['price'] }}</td>
+    <td><span class="status {{ b['status'] }}">{{ b['status'] }}</span></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

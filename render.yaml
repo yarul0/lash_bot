@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: lash-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: BOT_TOKEN
+        sync: false
+      - key: ADMIN_ID
+        sync: false
+      - key: TURSO_URL
+        sync: false
+      - key: TURSO_AUTH_TOKEN
+        sync: false
+      - key: WEBHOOK_URL
+        sync: false
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: MASTER_USERNAME
+        sync: false
