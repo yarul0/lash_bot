@@ -65,11 +65,15 @@ async def my_bookings(message: Message):
     if not bookings:
         await message.answer("У вас немає активних записів.")
         return
+    status_map = {
+        "pending": "🟡 Очікує підтвердження",
+        "confirmed": "✅ Підтверджено",
+        "cancelled": "❌ Скасовано",
+    }
     for b in bookings:
-        txt = (f"💇 {b['service_name']}\n"
+        txt = (f"👁️ Нарощування вій\n"
                f"🕐 {fmt_dt(b['start_ts'])}\n"
-               f"Статус: {b['status']}\n"
-               f"Ціна: {b['price']} грн")
+               f"Статус: {status_map.get(b['status'], b['status'])}")
         kb = InlineKeyboardMarkup(inline_keyboard=[[
             InlineKeyboardButton(text="✅ Підтвердити",
                                  callback_data=f"confirm_{b['id']}"),
